@@ -2,7 +2,6 @@ package questions;
 
 public class Question {
     int questionId;
-    public int questionNum;
     private final int correctAnswer;
     public String questionText;
     public String[] options;
@@ -11,9 +10,8 @@ public class Question {
     public int prizeAmount = 0;
 
 
-    public Question(int questionId, int questionNum, int correctAnswer, String questionText, String[] options, boolean canWalkAway, boolean canUseLifeline, int prizeAmount) {
+    public Question(int questionId, int correctAnswer, String questionText, String[] options, boolean canWalkAway, boolean canUseLifeline, int prizeAmount) {
         this.questionId = questionId;
-        this.questionNum = questionNum;
         this.correctAnswer = correctAnswer;
         this.questionText = questionText;
         this.options = options;

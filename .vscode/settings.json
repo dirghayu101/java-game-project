@@ -1,0 +1,8 @@
+{
+    "java.project.sourcePaths": ["src"],
+    "java.project.outputPath": "bin",
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar"
+    ],
+    "jdk.runConfig.env": "questionBank=static/questions.txt easyPrizeMap=static/easyPrizeMap.txt hardPrizeMap=static/hardPrizeMap.txt"
+}
