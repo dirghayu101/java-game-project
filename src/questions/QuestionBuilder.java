@@ -1,18 +1,19 @@
 package questions;
 
+import Game.GameConstants;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Map;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class QuestionBuilder {
    
     private final int round = 3;
     private final int totalQuestions;
-    private Map<Integer, Integer> prizeMap; 
-    private final String questionBankPath = System.getenv("questionBank");
+    private HashMap<Integer, Integer> prizeMap = new HashMap<>(); 
+    private final String questionBankPath = GameConstants.QUESTION_BANK;
     private final String prizeMapPath;
 
 
@@ -50,6 +51,9 @@ public class QuestionBuilder {
         boolean canWalkAway = false;
         for(String question: questionSetString){
             int questionId = key;
+            if(this.prizeMap.get(key) == null){
+                System.out.println("error about to occur");
+            }
             int questionPrize = this.prizeMap.get(key);
             // Determines if this question is asked at the end of a round.
             if((questionId % this.round) == 0){

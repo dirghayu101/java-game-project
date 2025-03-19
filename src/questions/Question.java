@@ -23,4 +23,12 @@ public class Question {
     public boolean checkAnswer(int option){
         return option == this.correctAnswer;
     }
+
+    public void printQuestion(){
+        System.out.println(questionId + ". " + questionText + "\n");
+        for(int i = 1; i <= 4; i++){
+            System.out.println("Option " + i + ": " + options[i-1]);
+        }
+        System.out.println("\nPrize Amount: $"+ prizeAmount + "\n");
+    }
 }
