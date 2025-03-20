@@ -20,7 +20,7 @@ public class Question {
         this.prizeAmount = prizeAmount;
     }
 
-    public boolean checkAnswer(int option){
+    public boolean correctAnswer(int option){
         return option == this.correctAnswer;
     }
 

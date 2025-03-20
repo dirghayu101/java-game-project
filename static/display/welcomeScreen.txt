@@ -1,0 +1,6 @@
+Welcome to Who Wants to be a Millionaire!
+
+Please choose your option:
+1. Start the game.
+2. View the rules of the game.
+3. Exit.

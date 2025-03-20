@@ -6,15 +6,14 @@ import java.util.ArrayList;
 import questions.*;
 
 public class Level {
-    String difficulty;
-    ArrayList<Question> questions; 
+    String difficulty; 
 
     public Level(String chosenDifficulty){
         this.difficulty = chosenDifficulty;
-        this.initQuestions();
   }
 
-    private void initQuestions(){
+    public ArrayList<Question> initQuestions(){
+        ArrayList<Question> questions = new ArrayList<>();
         switch (this.difficulty) {
             case "easy" -> {
                 QuestionBuilder qb = new QuestionBuilder(GameConstants.EASY_PRIZE_MAP, 9);
@@ -26,13 +25,6 @@ public class Level {
             }
             default -> throw new AssertionError("Difficulty level passed as an argument does not exist.");
         }
-    }
-
-    public void printQuestions(){
-        System.out.println("Printing all questions in questions ArrayList.");
-        for(Question currentQuestion: this.questions){
-            currentQuestion.printQuestion();
-        }
-        System.out.println("Printed all questions in question ArrayList.");
+        return questions;
     }
 }
