@@ -1,8 +1,9 @@
 package levels;
 
 
-import Game.GameConstants;
 import java.util.ArrayList;
+
+import game.GameConstants;
 import questions.*;
 
 public class Level {

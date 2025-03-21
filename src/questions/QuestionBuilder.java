@@ -1,6 +1,6 @@
 package questions;
 
-import Game.GameConstants;
+import game.GameConstants;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
