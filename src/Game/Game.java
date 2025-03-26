@@ -1,10 +1,10 @@
 package game;
 
-import questions.Question;
 import display.Display;
 import display.DisplayConstants;
-import player.Player;
 import java.util.ArrayList;
+import player.Player;
+import questions.Question;
 
 public class Game {
 
@@ -22,7 +22,6 @@ public class Game {
     private Player initializePlayer() {
         String username = userDisplay.getUserName();
         int levelChoice = userDisplay.showDisplayPromptUserInput(DisplayConstants.CHOOSE_LEVEL, true);
-        handleInvalidOptions(1, 2, levelChoice);
         String levelChosen = levelChoice == 1 ? "easy" : "hard";
         return new Player(username, levelChosen);
     }
@@ -30,7 +29,6 @@ public class Game {
     private void displayQuestions(ArrayList<Question> questions) {
         for (Question currentQuestion : questions) {
             int chosenOption = userDisplay.showDisplayPromptUserInput(currentQuestion);
-            handleInvalidOptions(1, 4, chosenOption);
             if (!currentQuestion.correctAnswer(chosenOption)) {
                 System.out.println("Unfortunately, the chosen option is incorrect.");
                 userDisplay.showDisplayScreenFile(DisplayConstants.ELIMINATE);
@@ -38,12 +36,6 @@ public class Game {
                 userDisplay.exit();
             } else {
             }
-        }
-    }
-
-    private void handleInvalidOptions(int minOption, int maxOption, int chosenOption) {
-        if (chosenOption > maxOption || chosenOption < minOption) {
-            userDisplay.exit();
         }
     }
 }

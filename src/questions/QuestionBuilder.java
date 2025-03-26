@@ -21,6 +21,7 @@ public class QuestionBuilder {
         this.totalQuestions = totalQuestions;
         this.prizeMapPath = prizeMap;
         this.initPrizeMap();
+
     }
 
     // This method will initialize the Map prizeMap. It takes values for the prizeMap from the static file which will be passed as a string based on chosen difficulty.
@@ -30,6 +31,7 @@ public class QuestionBuilder {
             if(!prizeMapFile.exists()){
                 throw new FileNotFoundException();
             }
+
             Scanner sc = new Scanner(prizeMapFile);
             while(sc.hasNextInt()){
                 int key = sc.nextInt();

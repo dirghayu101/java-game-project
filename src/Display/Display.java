@@ -3,20 +3,18 @@ package display;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
-
-import game.GameConstants;
 import questions.Question;
 
-// Display will be a singleton class. Since display can have different states like taking in input, or confirming user options etc at any point, making it singleton will be easy to keep track of what's being displayed.
+
 public class Display {
 
     private static Display display_instance = null;
-    // Using multiple scanner was invoking input mismatch error. So for the user input, same instance of scanner is going to be shared across application.
-    private static Scanner userInputScanner = new Scanner(System.in);
+    private static final Scanner userInputScanner = new Scanner(System.in);
 
     private Display() {
     }
 
+    // Singleton getter.
     public static Display getDisplay() {
         if (display_instance == null) {
             display_instance = new Display();
@@ -25,8 +23,9 @@ public class Display {
     }
 
     public boolean showWelcomeScreen() {
-        int userChoice = this.showDisplayPromptUserInput(DisplayConstants.WELCOME_SCREEN, false);
+        this.showDisplayScreenFile(DisplayConstants.WELCOME_SCREEN);
         boolean startGame = false;
+        int userChoice = this.getUserChoice(1, 3);
         switch (userChoice) {
             case 1 -> {
                 startGame = true;
@@ -34,7 +33,7 @@ public class Display {
             case 2 -> {
                 int ruleChoice = showDisplayPromptUserInput(DisplayConstants.GAME_RULES, false);
                 if (ruleChoice == 1) {
-                    showWelcomeScreen();
+                    return showWelcomeScreen();
                 } else {
                     startGame = false;
                 }
@@ -47,15 +46,17 @@ public class Display {
     }
 
     public String getUserName() {
-        System.out.print("\n\nPlease enter your name here: ");
+        System.out.print("\n\n\nPlease enter your name here: ");
         String username = userInputScanner.next();
-        this.showDisplayScreenFile(DisplayConstants.SPACER);
+        this.putSpaceOnDisplay(10);
         return username;
     }
 
     public void exit() {
-        this.showDisplayScreenFile(DisplayConstants.SPACER);
+        this.putSpaceOnDisplay(10);
+        System.out.println("Thanks for trying out our application! :)");
         System.out.println("Exiting game.");
+        this.putSpaceOnDisplay(10);
         System.exit(0);
     }
 
@@ -66,7 +67,7 @@ public class Display {
         do {
             question.printQuestion();
             userChoice = this.getUserChoice();
-            confirmChoice = this.confirmUserChoice(userChoice);
+            confirmChoice = userConfirmsChoice(userChoice);
         } while (confirmChoice);
         return userChoice;
     }
@@ -76,14 +77,27 @@ public class Display {
         do {
             this.showDisplayScreenFile(filePath);
             userChoice = this.getUserChoice();
-            if(confirmChoice)
-                confirmChoice = this.confirmUserChoice(userChoice);
-        } while(confirmChoice);
+            if (confirmChoice)
+                confirmChoice = this.userConfirmsChoice(userChoice);
+        } while (confirmChoice);
+        return userChoice;
+    }
+
+    public int showDisplayPromptUserInput(String filePath, boolean confirmUserChoice, int minOption, int maxOption) {
+        int userChoice;
+        do {
+            this.showDisplayScreenFile(filePath);
+            userChoice = this.getUserChoice(minOption, maxOption);
+            if (confirmUserChoice) {
+                confirmUserChoice = userConfirmsChoice(userChoice);
+            }
+        } while (confirmUserChoice);
         return userChoice;
     }
 
     public boolean playerWalkaway(Question currentQuestion) {
-        System.out.println("Congratulations on reaching the end of the current round! You have now won $" + currentQuestion.prizeAmount + ".");
+        System.out.println("Congratulations on reaching the end of the current round! You have now won $"
+                + currentQuestion.prizeAmount + ".");
         int userChoice = this.showDisplayPromptUserInput(DisplayConstants.WALKAWAY, true);
         if (userChoice == 1) {
             return false;
@@ -91,6 +105,20 @@ public class Display {
             this.showDisplayScreenFile(DisplayConstants.ELIMINATE);
             return true;
         }
+    }
+
+    private void putSpaceOnDisplay(int newLines) {
+        for (int i = 1; i <= newLines; i++) {
+            System.out.println();
+        }
+    }
+
+    private boolean userConfirmsChoice(int userChoice){
+        System.out.println("You have chosen the option " + userChoice);
+        System.out.println("This is the final confirmation, you can still change your choice now.");
+        System.out.println("Enter 1 to confirm your choice, any other character to choose again.");
+        int confirm = this.getUserChoice();
+        return confirm != 1;    // returns false if user enters 1.
     }
 
     public void showDisplayScreenFile(String filePath) {
@@ -113,19 +141,20 @@ public class Display {
         int choice;
         System.out.print("\n\nPlease enter your choice here: ");
         choice = userInputScanner.nextInt();
+        this.putSpaceOnDisplay(10);
         return choice;
     }
 
-    private boolean confirmUserChoice(int choice) {
-        System.out.println("You have chosen the option " + choice + ". This is the final confirmation, you cannot change your choice after this stage.");
-        System.out.print("Please enter 1 to confirm your choice: ");
-        int confirmChoice = userInputScanner.nextInt();
-        // Print some space if the user doesn't want to confirm the choice to print the previous description again.
-        if (confirmChoice != 1) {
-            this.showDisplayScreenFile(DisplayConstants.SPACER);
-            return false;
-        }
-        return true;
+    private int getUserChoice(int minOption, int maxOption) {
+        int choice;
+        do {
+            System.out.print("\n\n\nPlease enter your choice here: ");
+            choice = userInputScanner.nextInt();
+        } while (choice < minOption && choice > maxOption);
+        this.putSpaceOnDisplay(10);
+        return choice;
     }
+
+
 
 }

@@ -1,19 +1,18 @@
 package levels;
 
-
 import java.util.ArrayList;
 
 import game.GameConstants;
 import questions.*;
 
 public class Level {
-    String difficulty; 
+    String difficulty;
 
-    public Level(String chosenDifficulty){
+    public Level(String chosenDifficulty) {
         this.difficulty = chosenDifficulty;
-  }
+    }
 
-    public ArrayList<Question> initQuestions(){
+    public ArrayList<Question> initQuestions() {
         ArrayList<Question> questions = new ArrayList<>();
         switch (this.difficulty) {
             case "easy" -> {
