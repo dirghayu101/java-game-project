@@ -14,6 +14,7 @@ public class Game {
     }
 
     public void start(){
+        userDisplay.startGame();
         Player player = this.initializePlayer();
         ArrayList<Question> questions = player.getQuestions();
         displayQuestions(questions);
@@ -21,7 +22,7 @@ public class Game {
 
     private Player initializePlayer() {
         String username = userDisplay.getUserName();
-        int levelChoice = userDisplay.showDisplayPromptUserInput(DisplayConstants.CHOOSE_LEVEL, true);
+        int levelChoice = userDisplay.showDisplayPromptUserInput(DisplayConstants.CHOOSE_LEVEL, true, 1, 2);
         String levelChosen = levelChoice == 1 ? "easy" : "hard";
         return new Player(username, levelChosen);
     }
@@ -29,9 +30,10 @@ public class Game {
     private void displayQuestions(ArrayList<Question> questions) {
         for (Question currentQuestion : questions) {
             int chosenOption = userDisplay.showDisplayPromptUserInput(currentQuestion);
-            if (!currentQuestion.correctAnswer(chosenOption)) {
+            if (!currentQuestion.isCorrectAnswer(chosenOption)) {
                 System.out.println("Unfortunately, the chosen option is incorrect.");
                 userDisplay.showDisplayScreenFile(DisplayConstants.ELIMINATE);
+                userDisplay.exit();
             } else if (currentQuestion.canWalkAway && userDisplay.playerWalkaway(currentQuestion)) {
                 userDisplay.exit();
             } else {
