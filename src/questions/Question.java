@@ -1,7 +1,9 @@
 package questions;
 
+import utility.GeneralUtilityMethods;
+
 public class Question {
-    int questionId;
+    public int questionId;
     private final int correctAnswer;
     public String questionText;
     public String[] options;
@@ -20,15 +22,19 @@ public class Question {
         this.prizeAmount = prizeAmount;
     }
 
-    public boolean isCorrectAnswer(int option){
-        return option == this.correctAnswer;
+    public Question removeTwoIncorrectOptions(){
+        GeneralUtilityMethods util = new GeneralUtilityMethods();
+        int keepOption = util.getRandomOption(this.correctAnswer);
+        String[] modifiedOptions = util.modifyOptions(this.correctAnswer, keepOption, options);
+        return new Question(this.questionId, 1, this.questionText, modifiedOptions, this.canWalkAway, this.canUseLifeline, this.prizeAmount);
     }
 
-    public void printQuestion(){
-        System.out.println(questionId + ". " + questionText + "\n");
-        for(int i = 1; i <= 4; i++){
-            System.out.println("Option " + i + ": " + options[i-1]);
-        }
-        System.out.println("\nPrize Amount: $"+ prizeAmount + "\n");
+    public double[] audiencePollOnOptions(){
+        GeneralUtilityMethods util = new GeneralUtilityMethods();
+        return util.audiencePollResult(this.options.length, this.correctAnswer);
+    }
+
+    public boolean isCorrectAnswer(int option){
+        return option == this.correctAnswer;
     }
 }

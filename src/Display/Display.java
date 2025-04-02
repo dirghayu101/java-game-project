@@ -69,11 +69,21 @@ public class Display {
         boolean confirmUserChoice = true;
         int userChoice;
         do {
-            question.printQuestion();
+            this.printQuestion(question);
             userChoice = this.getUserChoice(1, 4);
             confirmUserChoice = userConfirmsChoice(userChoice);
         } while (confirmUserChoice);
         return userChoice;
+    }
+
+    // Helper method to print question and options.
+    public void printQuestion(Question question){
+        System.out.println(question.questionId + ". " + question.questionText + "\n");
+        int totalOptions = question.options.length;
+        for(int i = 1; i <= totalOptions; i++){
+            System.out.println("Option " + i + ": " + question.options[i-1]);
+        }
+        System.out.println("\nPrize Amount: $"+ question.prizeAmount + "\n");
     }
 
     // Overload method when there is a single option and the chosen option doesn't
