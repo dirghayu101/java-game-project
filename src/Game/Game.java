@@ -21,7 +21,7 @@ public class Game {
     }
 
     private Player initializePlayer() {
-        String username = userDisplay.getUserName();
+        String username = userDisplay.getUserName("Please enter your name.");
         int levelChoice = userDisplay.showDisplayPromptUserInput(DisplayConstants.CHOOSE_LEVEL, true, 1, 2);
         String levelChosen = levelChoice == 1 ? "easy" : "hard";
         return new Player(username, levelChosen);

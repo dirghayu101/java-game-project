@@ -49,13 +49,32 @@ public class Display {
         this.showDisplayScreenFile(DisplayConstants.GAME_START, 300);
     }
 
-    public String getUserName() {
-        System.out.print("\n\nPlease enter your name here: ");
+    // Prompt user to input username.
+    public String getUserName(String promptMessage) {
+        this.putSpaceOnDisplay(2);
+        System.out.print(promptMessage + " Type here : ");
         String username = userInputScanner.next();
         this.putSpaceOnDisplay(10);
         return username;
     }
 
+    // callAFriend method for handling the call a friend lifeline.
+    public String callAFriend(){
+        this.putSpaceOnDisplay(2);
+        System.out.println("You have chosen to call a friend.");
+        String friend = getUserName("Please enter the friend's name you wanna connect to.");
+        System.out.println("Game will be attempting to connect to " + friend + "...");
+        this.showDisplayScreenFile(DisplayConstants.CALL_FRIEND, 300);
+        this.showDisplayScreenFile(DisplayConstants.FRIEND_RESPONSE, 600);
+        System.out.println(friend + " has requested you to send them the question text.");
+        System.out.print("Please enter the question text here, you have 26 seconds: ");
+        UserInputTimed userInputTimed = new UserInputTimed();
+        String userInput = userInputTimed.getUserInputTimed(27000, userInputScanner);
+        return userInput;
+    }
+
+
+    // Display the exit message to user.
     public void exit() {
         this.putSpaceOnDisplay(10);
         System.out.println("Thanks for trying out our application! :)");
@@ -86,8 +105,7 @@ public class Display {
         System.out.println("\nPrize Amount: $"+ question.prizeAmount + "\n");
     }
 
-    // Overload method when there is a single option and the chosen option doesn't
-    // need to be checked.
+    // Overload method when there is a single option and the chosen option doesn't have to be confirmed.
     public int showDisplayPromptUserInput(String filePath, boolean confirmUserChoice) {
         int userChoice;
         do {
@@ -112,6 +130,7 @@ public class Display {
         return userChoice;
     }
 
+    // Method responsible for displaying the message if the user chose to walkaway at the end of a round.
     public boolean playerWalkaway(Question currentQuestion) {
         System.out.println("Congratulations on reaching the end of the current round! You have now won $"
                 + currentQuestion.prizeAmount + ".");
@@ -125,12 +144,14 @@ public class Display {
         }
     }
 
+    // Method to put display based on screen. The newLines parameter will determine the number of newlines to be placed on the screen.
     private void putSpaceOnDisplay(int newLines) {
         for (int i = 1; i <= newLines; i++) {
             System.out.println();
         }
     }
 
+    // Prompt to confirm user choice.
     private boolean userConfirmsChoice(int userChoice) {
         System.out.println("You have chosen the option " + userChoice);
         System.out.println("This is the final confirmation, you can still change your choice now.");
@@ -139,6 +160,7 @@ public class Display {
         return confirm != 1; // returns false if user enters 1.
     }
 
+    // Displays a static file stored in the filepath parameter.
     public void showDisplayScreenFile(String filePath) {
         try {
             File displayFile = new File(filePath);

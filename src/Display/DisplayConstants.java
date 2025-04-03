@@ -8,4 +8,6 @@ public class DisplayConstants {
     public static final String ELIMINATE = "static/display/eliminate.txt";
     public static final String WALKAWAY = "static/display/walkaway.txt";
     public static final String GAME_START = "static/display/gameStart.txt";
+    public static final String CALL_FRIEND = "static/lifeline/callAFriend.txt";
+    public static final String FRIEND_RESPONSE = "static/lifeline/friendResponse.txt";
 }
