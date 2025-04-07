@@ -15,4 +15,5 @@ public class DisplayConstants {
     public static final String CALL_FRIEND_FAILURE = "static/lifeline/callAFriendFailure.txt";
     public static final String GAME_WIN = "static/display/gameWin.txt";
     public static final String CORRECT_ANSWER = "static/display/correctAnswer.txt";
+    public static final String AUDIENCE_POLL = "static/lifeline/audiencePoll.txt";
 }

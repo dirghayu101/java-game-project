@@ -26,19 +26,23 @@ public class GeneralUtilityMethods {
 
     public double[] audiencePollResult(int totalOptions, int correctOption){
         Random pollGenerator = new Random();
-        int correctOptionIndex = correctOption - 1;
-        double upperBound = 100.1;
-        double[] pollResult = new double[4];
-        double sum = 0;
-        for(int i = 0; i < totalOptions; i++){
-            if(i == correctOptionIndex){
-                continue;
-            }
-            pollResult[i] = pollGenerator.nextDouble(0, upperBound);
-            sum += pollResult[i];
-            upperBound -= sum;
+        int correctIndex = correctOption - 1;
+        double[] pollResult = new double[totalOptions];
+        double correctPercentage = 50 + pollGenerator.nextDouble() * 30;
+        pollResult[correctIndex] = correctPercentage;
+        double remaining = 100.0 - correctPercentage;
+        double sum = 0.0;
+        int lastIncorrect = -1;
+        for (int i = 0; i < totalOptions; i++) {
+            if (i == correctIndex) continue;
+            lastIncorrect = i;
+            double rand = pollGenerator.nextDouble() * (remaining - sum);
+            pollResult[i] = rand;
+            sum += rand;
         }
-        pollResult[correctOptionIndex] = upperBound - sum;
+        pollResult[lastIncorrect] += (remaining - sum);
         return pollResult;
     }
+
+
 }

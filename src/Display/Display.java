@@ -64,6 +64,19 @@ public class Display {
         System.exit(0);
     }
 
+    public void printPollResult(String[] options, double[] pollResult){
+        if(options.length != pollResult.length){
+            System.out.println("An issue occurred in the system.");
+            return;
+        }
+        System.out.println("\n\nHere are the much awaited results!\n\n");
+        for(int i = 0; i < options.length; i++){
+            double truncatePool = Math.floor(pollResult[i] * 100) / 100;
+            System.out.println("Option " + (i+1) + ": " + options[i] + "   --->   " + truncatePool + "%.");
+        }
+        this.putSpaceOnDisplay(3);
+    }
+
     // Helper method to print question, options and available lifeline.
     private void printQuestionLifeline(Question question) {
         System.out.println(question.questionId + ". " + question.questionText + "\n");

@@ -18,6 +18,8 @@ public class Game {
         Player player = this.initializePlayer();
         ArrayList<Question> questions = player.getQuestions();
         displayQuestions(questions);
+        userDisplay.showDisplayScreenFile(DisplayConstants.GAME_WIN, 700);
+        userDisplay.exit();
     }
 
     private Player initializePlayer() {
