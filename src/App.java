@@ -1,5 +1,5 @@
-import game.Game;
 import display.Display;
+import game.Game;
 
 public class App {
 

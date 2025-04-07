@@ -2,11 +2,16 @@ package lifeline;
 
 import questions.Question;
 
-public class FiftyFifty extends Lifeline<Question> {
+public class FiftyFifty extends Lifeline {
 
    @Override
-   protected Question useLifeline(Question currentQuestion) {
-      return currentQuestion.removeTwoIncorrectOptions();
+   protected void useLifeline(Question currentQuestion) {
+      Question updatedQuestion = currentQuestion.removeTwoIncorrectOptions();
+   }
+
+   @Override
+   public String getLifeline(){
+    return "Fifty-Fifty";
    }
 
 }

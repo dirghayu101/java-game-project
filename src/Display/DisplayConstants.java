@@ -10,4 +10,7 @@ public class DisplayConstants {
     public static final String GAME_START = "static/display/gameStart.txt";
     public static final String CALL_FRIEND = "static/lifeline/callAFriend.txt";
     public static final String FRIEND_RESPONSE = "static/lifeline/friendResponse.txt";
+    public static final String CALL_FRIEND_SUCCESS = "static/lifeline/callAFriendSuccess.txt";
+    public static final String CALL_FRIEND_PARTIAL = "static/lifeline/callAFriendPartial.txt";
+    public static final String CALL_FRIEND_FAILURE = "static/lifeline/callAFriendFailure.txt";
 }

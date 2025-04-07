@@ -22,6 +22,10 @@ public class Question {
         this.prizeAmount = prizeAmount;
     }
 
+    public String getAnswer(){
+        return this.options[this.correctAnswer];
+    }
+
     public Question removeTwoIncorrectOptions(){
         GeneralUtilityMethods util = new GeneralUtilityMethods();
         int keepOption = util.getRandomOption(this.correctAnswer);

@@ -2,10 +2,14 @@ package lifeline;
 
 import questions.Question;
 
-public class AudiencePoll extends Lifeline<double[]>{
+public class AudiencePoll extends Lifeline{
     @Override
-   protected double[] useLifeline(Question currentQuestion) {
-    return currentQuestion.audiencePollOnOptions();
+   protected void useLifeline(Question currentQuestion) {
+    double[] audiencePollResult =  currentQuestion.audiencePollOnOptions();
    }
 
+   @Override
+   public String getLifeline(){
+    return "Audience Poll";
+   }
 }

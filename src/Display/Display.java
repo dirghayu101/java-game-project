@@ -21,6 +21,7 @@ public class Display {
         return display_instance;
     }
 
+    // Method to display welcome screen to user.
     public boolean showWelcomeScreen() {
         this.showDisplayScreenFile(DisplayConstants.WELCOME_SCREEN);
         boolean startGame = false;
@@ -44,6 +45,7 @@ public class Display {
         return startGame;
     }
 
+    // Shows starting welcome screen text to user when the user starts game.
     public void startGame() {
         this.putSpaceOnDisplay(12);
         this.showDisplayScreenFile(DisplayConstants.GAME_START, 300);
@@ -54,25 +56,51 @@ public class Display {
         this.putSpaceOnDisplay(2);
         System.out.print(promptMessage + " Type here : ");
         String username = userInputScanner.next();
-        this.putSpaceOnDisplay(10);
+        this.putSpaceOnDisplay(4);
         return username;
     }
 
     // callAFriend method for handling the call a friend lifeline.
-    public String callAFriend(){
+    public String callAFriendPrompt(){
         this.putSpaceOnDisplay(2);
-        System.out.println("You have chosen to call a friend.");
+        System.out.println("You have chosen to call a friend. You will get a total of 30 seconds to ask question.\n");
         String friend = getUserName("Please enter the friend's name you wanna connect to.");
         System.out.println("Game will be attempting to connect to " + friend + "...");
-        this.showDisplayScreenFile(DisplayConstants.CALL_FRIEND, 300);
-        this.showDisplayScreenFile(DisplayConstants.FRIEND_RESPONSE, 600);
+        this.putSpaceOnDisplay(2, ".");
+        this.showDisplayScreenFile(DisplayConstants.CALL_FRIEND, 800);
+        this.putSpaceOnDisplay(2, ".");
+        this.showDisplayScreenFile(DisplayConstants.FRIEND_RESPONSE, 1200);
+        this.putSpaceOnDisplay(2, ".");
         System.out.println(friend + " has requested you to send them the question text.");
-        System.out.print("Please enter the question text here, you have 26 seconds: ");
-        UserInputTimed userInputTimed = new UserInputTimed();
-        String userInput = userInputTimed.getUserInputTimed(27000, userInputScanner);
+        this.putSpaceOnDisplay(2, ".");
+        System.out.println("NOTE! You have 26 seconds remaining in this conversation with your friend, " + friend +".\nPlease enter the question text below and press enter once done.");
+        this.putSpaceOnDisplay(2, ".");
+        System.out.print("Please enter the question text here: ");
+        CallAFriendDisplayHelper userInputTimed = new CallAFriendDisplayHelper();
+        String userInput = userInputTimed.getUserInputTimed(26000, userInputScanner);
         return userInput;
     }
 
+    // callAFriendResponse method. 
+    /* 
+        responseStatus == 1  ->  question typed successfully.
+        responseStatus == 2 -> question typed partially.
+        responseStatus == 3 -> gibberish typed. Or nothing typed.
+    */
+    public void callAFriendResponse(int responseStatus, String respondedAnswer){
+        switch (responseStatus) {
+            case 1 -> {
+                this.showDisplayScreenFile(DisplayConstants.CALL_FRIEND_SUCCESS, 400);
+                System.out.println("I am pretty sure the answer is: " + respondedAnswer);
+            }
+            case 2 -> {
+                this.showDisplayScreenFile(DisplayConstants.CALL_FRIEND_PARTIAL, 400);
+                System.out.println("I am kinda unsure, but I think the answer is: " + respondedAnswer);
+            }
+            default -> this.showDisplayScreenFile(DisplayConstants.CALL_FRIEND_FAILURE, 400);
+        }
+        System.out.println("CALL HANGING OUT!\n\nCall a friend lifeline, has been used.\n\n");
+    }
 
     // Display the exit message to user.
     public void exit() {
@@ -89,11 +117,14 @@ public class Display {
         int userChoice;
         do {
             this.printQuestion(question);
-            userChoice = this.getUserChoice(1, 4);
+            userChoice = question.canUseLifeline ? this.getUserChoice(1, 7) : this.getUserChoice(1, 4);
             confirmUserChoice = userConfirmsChoice(userChoice);
         } while (confirmUserChoice);
         return userChoice;
     }
+
+
+    
 
     // Helper method to print question and options.
     public void printQuestion(Question question){
@@ -151,6 +182,13 @@ public class Display {
         }
     }
 
+    // Overload method, put space on display also, put some filler characters on each newLines number of new lines passed as lineFillers parameter
+    private void putSpaceOnDisplay(int newLines, String lineFillers) {
+        for (int i = 1; i <= newLines; i++) {
+            System.out.println(lineFillers);
+        }
+    }
+
     // Prompt to confirm user choice.
     private boolean userConfirmsChoice(int userChoice) {
         System.out.println("You have chosen the option " + userChoice);
@@ -176,7 +214,7 @@ public class Display {
             System.err.println("Display file not found.");
         }
     }
-    // Overload method. Pauses between printing lines.
+    // Overload method. Pauses while printing lines for the timer milliseconds.
     public void showDisplayScreenFile(String filePath, int timer){
         try {
             File displayFile = new File(filePath);

@@ -3,8 +3,8 @@ package lifeline;
 import display.Display;
 import questions.Question;
 
-public abstract class Lifeline<T> {
-    private boolean isUsed = false;
+public abstract class Lifeline {
+    boolean isUsed = false;
     static Display userDisplay = Display.getDisplay();
 
     public void executeLifeline(Question currentQuestion) {
@@ -16,5 +16,10 @@ public abstract class Lifeline<T> {
         }
     }
 
-    protected abstract T useLifeline(Question currentQuestion);
+    public boolean canUseLifeline(){
+        return !isUsed;
+    }
+
+    protected abstract void useLifeline(Question currentQuestion);
+    public abstract String getLifeline();
 }
