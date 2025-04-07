@@ -23,16 +23,16 @@ public class Question {
     }
 
     public String getAnswer(){
-        return this.options[this.correctAnswer];
+        return this.options[this.correctAnswer - 1];
     }
 
-    public Question removeTwoIncorrectOptions(){
+    public void removeTwoIncorrectOptions(){
         GeneralUtilityMethods util = new GeneralUtilityMethods();
         int keepOption = util.getRandomOption(this.correctAnswer);
         String[] modifiedOptions = util.modifyOptions(this.correctAnswer, keepOption, options);
         // This will help in validating the choice user enters.
         this.correctAnswer = 1;
-        return new Question(this.questionId, 1, this.questionText, modifiedOptions, this.canWalkAway, this.canUseLifeline, this.prizeAmount);
+        this.options = modifiedOptions;
     }
 
     public double[] audiencePollOnOptions(){

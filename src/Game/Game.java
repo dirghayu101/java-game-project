@@ -32,11 +32,13 @@ public class Game {
             int chosenOption = userDisplay.showDisplayPromptUserInput(currentQuestion);
             if (!currentQuestion.isCorrectAnswer(chosenOption)) {
                 System.out.println("Unfortunately, the chosen option is incorrect.");
-                userDisplay.showDisplayScreenFile(DisplayConstants.ELIMINATE);
+                userDisplay.showDisplayScreenFile(DisplayConstants.ELIMINATE, 300);
                 userDisplay.exit();
             } else if (currentQuestion.canWalkAway && userDisplay.playerWalkaway(currentQuestion)) {
                 userDisplay.exit();
             } else {
+                userDisplay.showDisplayScreenFile(DisplayConstants.CORRECT_ANSWER, 350);
+                userDisplay.putSpaceOnDisplay(7, "");
             }
         }
     }

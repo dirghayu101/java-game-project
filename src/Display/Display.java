@@ -3,6 +3,7 @@ package display;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import lifeline.Lifelines;
 import questions.Question;
@@ -26,7 +27,7 @@ public class Display {
 
     // Method to display welcome screen to user.
     public boolean showWelcomeScreen() {
-        this.showDisplayScreenFile(DisplayConstants.WELCOME_SCREEN);
+        this.showDisplayScreenFile(DisplayConstants.WELCOME_SCREEN, 300);
         boolean startGame = false;
         int userChoice = this.getUserChoice(1, 3);
         switch (userChoice) {
@@ -54,15 +55,6 @@ public class Display {
         this.showDisplayScreenFile(DisplayConstants.GAME_START, 300);
     }
 
-    // Prompt user to input username.
-    public String getUserName(String promptMessage) {
-        this.putSpaceOnDisplay(2);
-        System.out.print(promptMessage + " Type here : ");
-        String username = userInputScanner.next();
-        this.putSpaceOnDisplay(4);
-        return username;
-    }
-
     // Display the exit message to user.
     public void exit() {
         this.putSpaceOnDisplay(10);
@@ -79,7 +71,7 @@ public class Display {
         for (int i = 1; i <= totalOptions; i++) {
             System.out.println("Option " + i + ": " + question.options[i - 1]);
         }
-        if(question.canUseLifeline){
+        if (question.canUseLifeline) {
             lifelinePrinter(totalOptions + 1);
         }
         System.out.println("\n\nPrize Amount: $" + question.prizeAmount + "\n");
@@ -87,8 +79,9 @@ public class Display {
 
     private void lifelinePrinter(int lifelineStartOption) {
         ArrayList<String> availableLifelines = userLifelines.getAvailableLifelines();
-        for(String lifeline: availableLifelines){
-            System.out.println( "Lifeline option " + lifelineStartOption + ": " + lifeline + ".");
+        for (String lifeline : availableLifelines) {
+            System.out.println("Lifeline option " + lifelineStartOption + ": " + lifeline + ".");
+            lifelineStartOption++;
         }
     }
 
@@ -102,20 +95,21 @@ public class Display {
     public int showDisplayPromptUserInput(Question question) {
         boolean confirmUserChoice = true;
         boolean useLifeline;
-        int maxOption = question.options.length;
-        int lifelineStartOption = maxOption;
-        if(question.canUseLifeline){
-            maxOption += userLifelines.getLifelineArraySize();
-        }
-         
-        int minOption = 1;
+
         int userChoice;
         do {
+            int maxOption = question.options.length;
+            int lifelineStartOption = maxOption;
+            if (question.canUseLifeline) {
+                maxOption += userLifelines.getLifelineArraySize();
+            }
+    
+            int minOption = 1;
             useLifeline = false;
             this.printQuestionLifeline(question);
             userChoice = this.getUserChoice(minOption, maxOption);
             confirmUserChoice = userConfirmsChoice(userChoice);
-            if(question.canUseLifeline && userChoice > lifelineStartOption){
+            if (question.canUseLifeline && userChoice > lifelineStartOption) {
                 useLifeline = true;
                 handleLifeline(userChoice - lifelineStartOption, question);
             }
@@ -123,11 +117,12 @@ public class Display {
         return userChoice;
     }
 
-    // Overload method when there is a single option and the chosen option doesn't have to be confirmed.
+    // Overload method when there is a single option and the chosen option doesn't
+    // have to be confirmed.
     public int showDisplayPromptUserInput(String filePath, boolean confirmUserChoice) {
         int userChoice;
         do {
-            this.showDisplayScreenFile(filePath);
+            this.showDisplayScreenFile(filePath, 200);
             userChoice = this.getUserChoice();
             if (confirmUserChoice)
                 confirmUserChoice = this.userConfirmsChoice(userChoice);
@@ -139,7 +134,7 @@ public class Display {
     public int showDisplayPromptUserInput(String filePath, boolean confirmUserChoice, int minOption, int maxOption) {
         int userChoice;
         do {
-            this.showDisplayScreenFile(filePath);
+            this.showDisplayScreenFile(filePath, 300);
             userChoice = this.getUserChoice(minOption, maxOption);
             if (confirmUserChoice) {
                 confirmUserChoice = userConfirmsChoice(userChoice);
@@ -158,7 +153,7 @@ public class Display {
             return false;
         } else {
             System.out.println("You have played well and have won $" + currentQuestion.prizeAmount + ".\n");
-            this.showDisplayScreenFile(DisplayConstants.ELIMINATE);
+            this.showDisplayScreenFile(DisplayConstants.ELIMINATE, 200);
             return true;
         }
     }
@@ -173,7 +168,7 @@ public class Display {
 
     // Overload method, put space on display also, put some filler characters on
     // each newLines number of new lines passed as lineFillers parameter
-    private void putSpaceOnDisplay(int newLines, String lineFillers) {
+    public void putSpaceOnDisplay(int newLines, String lineFillers) {
         for (int i = 1; i <= newLines; i++) {
             System.out.println(lineFillers);
         }
@@ -230,28 +225,84 @@ public class Display {
     // Overload method just returns the user input without checking against the
     // available option. Example use case: confirmation of user choice.
     private int getUserChoice() {
-        int choice;
-        System.out.print("\n\nPlease enter your choice here: ");
-        choice = userInputScanner.nextInt();
-        this.putSpaceOnDisplay(10);
-        if (choice == 0) {
-            this.exit();
+        int choice = -1;
+        boolean validInput = false;
+
+        while (!validInput) {
+            try {
+                System.out.print("\n\nPlease enter your choice here: ");
+                choice = userInputScanner.nextInt();
+
+                if (choice == 0) {
+                    this.exit();
+                }
+
+                validInput = true;
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input! Please enter a valid number.");
+                userInputScanner.nextLine(); // clear invalid input
+            }
         }
+
+        this.putSpaceOnDisplay(10);
         return choice;
     }
 
     // Overloaded method. Also checks if the option entered by user is valid.
     private int getUserChoice(int minOption, int maxOption) {
-        int choice;
-        do {
-            System.out.print("\n\n\nPlease enter your choice here: ");
-            choice = userInputScanner.nextInt();
-            if (choice == 0) {
-                this.exit();
+        int choice = -1;
+        boolean validInput = false;
+
+        while (!validInput) {
+            try {
+                System.out.print("\n\n\nPlease enter your choice here: ");
+                choice = userInputScanner.nextInt();
+
+                if (choice == 0) {
+                    this.exit();
+                }
+
+                if (choice >= minOption && choice <= maxOption) {
+                    validInput = true;
+                } else {
+                    System.out.println("Please enter a number between " + minOption + " and " + maxOption + ".");
+                }
+
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input! Please enter a number.");
+                userInputScanner.nextLine();
             }
-        } while (choice < minOption || choice > maxOption);
+        }
+
         this.putSpaceOnDisplay(10);
         return choice;
+    }
+
+    // Prompt user to input username.
+    public String getUserName(String promptMessage) {
+        this.putSpaceOnDisplay(2);
+        String username = "";
+
+        while (true) {
+            try {
+                System.out.print(promptMessage + " Type here : ");
+                username = userInputScanner.next();
+
+                // Validation to avoid empty or invalid usernames
+                if (username.trim().isEmpty()) {
+                    System.out.println("Username cannot be empty. Please try again.");
+                } else {
+                    break;
+                }
+
+            } catch (Exception e) {
+                System.out.println("An error occurred. Please try again.");
+                userInputScanner.nextLine(); 
+            }
+        }
+
+        this.putSpaceOnDisplay(4);
+        return username;
     }
 
     // callAFriend method for handling the call a friend lifeline.
