@@ -6,7 +6,7 @@ public class FiftyFifty extends Lifeline {
 
    @Override
    protected void useLifeline(Question currentQuestion) {
-      Question updatedQuestion = currentQuestion.removeTwoIncorrectOptions();
+      currentQuestion = currentQuestion.removeTwoIncorrectOptions();
    }
 
    @Override

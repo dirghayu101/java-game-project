@@ -4,7 +4,7 @@ import utility.GeneralUtilityMethods;
 
 public class Question {
     public int questionId;
-    private final int correctAnswer;
+    private int correctAnswer;
     public String questionText;
     public String[] options;
     public boolean canWalkAway = false;
@@ -30,6 +30,8 @@ public class Question {
         GeneralUtilityMethods util = new GeneralUtilityMethods();
         int keepOption = util.getRandomOption(this.correctAnswer);
         String[] modifiedOptions = util.modifyOptions(this.correctAnswer, keepOption, options);
+        // This will help in validating the choice user enters.
+        this.correctAnswer = 1;
         return new Question(this.questionId, 1, this.questionText, modifiedOptions, this.canWalkAway, this.canUseLifeline, this.prizeAmount);
     }
 
