@@ -186,6 +186,18 @@ public class Display {
             System.out.println(lineFillers);
         }
     }
+    
+    // This method puts space on display with a timer and also uses lineFillers.
+    public void putSpaceOnDisplay(int newLines, String lineFillers, int timer) {
+        for (int i = 1; i <= newLines; i++) {
+            System.out.println(lineFillers);
+            try {
+                Thread.sleep(timer); // takes input in millisecond.
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt(); // Restores the interrupted state.
+            }
+        }
+    }
 
     // Prompt to confirm user choice.
     private boolean userConfirmsChoice(int userChoice) {
@@ -316,6 +328,14 @@ public class Display {
 
         this.putSpaceOnDisplay(4);
         return username;
+    }
+
+    // Round cleared message.
+    public void roundCleared(int currentRound){
+        System.out.println("CONGRATULATIONS! YOU MADE IT!!!");
+        this.putSpaceOnDisplay(3, ".", 950);
+        System.out.println("Made it to the end of round " + currentRound +"!!!");
+        this.putSpaceOnDisplay(7);
     }
 
     // callAFriend method for handling the call a friend lifeline.

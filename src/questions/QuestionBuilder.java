@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class QuestionBuilder {
    
-    private final int round = 3;
+    private final int rounds = 3;
     private final int totalQuestions;
     private HashMap<Integer, Integer> prizeMap = new HashMap<>(); 
     private final String questionBankPath = GameConstants.QUESTION_BANK;
@@ -50,17 +50,12 @@ public class QuestionBuilder {
         ArrayList<Question> questionSet = new ArrayList<>();
         int key = 1;
         boolean canUseLifeline = true;
-        boolean canWalkAway = false;
         for(String question: questionSetString){
             int questionId = key;
             if(this.prizeMap.get(key) == null){
                 System.out.println("error about to occur");
             }
             int questionPrize = this.prizeMap.get(key);
-            // Determines if this question is asked at the end of a round.
-            if((questionId % this.round) == 0){
-                canWalkAway = true;
-            }
             // Determines if the player can use lifeline for the question.
             if(this.totalQuestions == 15 && questionId <= 5){
                 canUseLifeline = false;
@@ -72,7 +67,7 @@ public class QuestionBuilder {
                 options[i] = questionComponents[i+1];
             }
             int answer = Integer.parseInt(questionComponents[5]);
-            Question thisQuestion = new Question(questionId, answer, questionStatement, options, canWalkAway, canUseLifeline, questionPrize);
+            Question thisQuestion = new Question(questionId, answer, questionStatement, options, canUseLifeline, questionPrize);
             questionSet.add(thisQuestion);
             key++;
         }
