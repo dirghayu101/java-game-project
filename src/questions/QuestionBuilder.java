@@ -1,6 +1,5 @@
 package questions;
 
-import game.GameConstants;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -9,11 +8,8 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class QuestionBuilder {
-   
-    private final int rounds = 3;
     private final int totalQuestions;
     private HashMap<Integer, Integer> prizeMap = new HashMap<>(); 
-    private final String questionBankPath = GameConstants.QUESTION_BANK;
     private final String prizeMapPath;
 
 
@@ -77,22 +73,8 @@ public class QuestionBuilder {
 
 
     // Helper method for the getQuestions(), this returns totalQuestions number of questions as an array (list) of string after randomly shuffling them.
-    private ArrayList<String> getRandomQuestionsArray(){
-        ArrayList<String> allQuestions = new ArrayList<>();
-        try {
-            File questionBank = new File(questionBankPath);
-            if(!questionBank.exists()){
-                throw new FileNotFoundException();
-            }
-            Scanner sc = new Scanner(questionBank);
-            while(sc.hasNext()){
-                String questionLine = sc.nextLine();
-                allQuestions.add(questionLine);
-            }
-            sc.close();
-        } catch (FileNotFoundException e) {
-            System.err.println("Question bank file not found.");
-        }
+    public ArrayList<String> getRandomQuestionsArray(){
+        ArrayList<String> allQuestions = QuestionCompiler.getQuestionBank();
         Collections.shuffle(allQuestions);
         ArrayList<String> randomQuestions = new ArrayList<>();
         for(int i = 0; i < totalQuestions; i++){

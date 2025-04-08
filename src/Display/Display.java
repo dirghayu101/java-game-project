@@ -367,16 +367,17 @@ public class Display {
      * responseStatus == 3 -> gibberish typed. Or nothing typed.
      */
     public void callAFriendResponse(int responseStatus, String respondedAnswer) {
+        respondedAnswer = respondedAnswer.strip();
         switch (responseStatus) {
             case 1 -> {
-                this.showDisplayScreenFile(DisplayConstants.CALL_FRIEND_SUCCESS, 400);
-                System.out.println("I am pretty sure the answer is: " + respondedAnswer);
+                this.showDisplayScreenFile(DisplayConstants.CALL_FRIEND_SUCCESS, 680);
+                System.out.println("I am pretty sure the answer is: " + respondedAnswer + "\n\n");
             }
             case 2 -> {
-                this.showDisplayScreenFile(DisplayConstants.CALL_FRIEND_PARTIAL, 400);
-                System.out.println("I am kinda unsure, but I think the answer is: " + respondedAnswer);
+                this.showDisplayScreenFile(DisplayConstants.CALL_FRIEND_PARTIAL, 680);
+                System.out.println("I am kinda unsure, but I think the answers could be: " + respondedAnswer);
             }
-            default -> this.showDisplayScreenFile(DisplayConstants.CALL_FRIEND_FAILURE, 400);
+            default -> this.showDisplayScreenFile(DisplayConstants.CALL_FRIEND_FAILURE, 680);
         }
         System.out.println("CALL HANGING OUT!\n\nCall a friend lifeline, has been used.\n\n");
     }
