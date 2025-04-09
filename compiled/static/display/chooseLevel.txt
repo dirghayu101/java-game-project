@@ -1,0 +1,6 @@
+Please choose your level:
+
+Option 1: Easy - 9 questions divided into 3 rounds with 3 questions asked in each round. Lifeline available from the first round. 
+Option 2: Hard - 15 questions divided into 5 rounds with 5 questions asked in each round. Lifeline only available after the first round.
+
+You have option to walkaway at the end of each round for both the levels.

@@ -1,0 +1,4 @@
+
+At this point, you can walkaway with the amount or continue the game.
+
+Enter 1 to continue to the next round, any other key to walkaway.
