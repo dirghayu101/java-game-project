@@ -6,11 +6,11 @@
 
 package questions;
 
+import game.GameConstants;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
-import game.GameConstants;
 
 
 public class QuestionCompiler {
@@ -18,10 +18,12 @@ public class QuestionCompiler {
     private static QuestionCompiler compilerInstance = null;
     private static ArrayList<String> questionBank = new ArrayList<>();
 
+    // This constructor is private to prevent instantiation from outside the class.
     private QuestionCompiler(){
         QuestionCompiler.questionBank = this.getRandomQuestionsArray();
     }
 
+    // This method will return the main purpose of this class, which is to compile the question bank and return an array list of questions.
     public static ArrayList<String> getQuestionBank(){
         if(compilerInstance == null){
             compilerInstance = new QuestionCompiler();
@@ -29,6 +31,7 @@ public class QuestionCompiler {
         return questionBank;
     }
 
+    // This method will read the question bank file and return an array list of questions.
     private ArrayList<String> getRandomQuestionsArray(){
         ArrayList<String> allQuestions = new ArrayList<>();
         try {

@@ -1,10 +1,13 @@
 package levels;
 
-import java.util.ArrayList;
-
 import game.GameConstants;
+import java.util.ArrayList;
 import questions.*;
 
+/**
+ * The Level class is responsible for initializing the game level based on the chosen difficulty.
+ * It creates a set of questions based on the difficulty level and returns them as an ArrayList.
+ */
 public class Level {
     String difficulty;
 

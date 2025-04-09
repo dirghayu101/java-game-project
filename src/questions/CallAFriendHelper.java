@@ -2,6 +2,7 @@ package questions;
 
 import java.util.ArrayList;
 
+// This class is used to help the player with the Call A Friend lifeline.
 public class CallAFriendHelper {
 
     ArrayList<String> allQuestions = QuestionCompiler.getQuestionBank();
@@ -10,9 +11,11 @@ public class CallAFriendHelper {
     public CallAFriendHelper() {
         
     }
-    
+
+    // This methods matches the question text with the questions in the question bank.
+    // It returns 1 if there is only one possible question, 2 if there are multiple possible questions, and 3 if there are no possible questions.
     public int getMatchingAnswerStatus(String questionText) {
-        if(questionText == null){
+        if(questionText == null || "".equals(questionText)){
             return 3;
         }
         questionText = questionText.toLowerCase().strip();
@@ -31,6 +34,8 @@ public class CallAFriendHelper {
         return 2;
     }
 
+    // This method returns the possible questions that match the question text.
+    // Returns a single String answer with all possible answers as friend's response.
     public String getAllPossibleAnswers() {
         String possibleAnswers = "";
         for(String question: possibleQuestions){

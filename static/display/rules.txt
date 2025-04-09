@@ -4,15 +4,14 @@ Rules of the game:
     - There will be 9 questions in Easy mode.
     - There will be 15 questions in Hard mode.
 3. Each round will have 3 questions in easy mode and 5 questions in hard mode.
-4. For Easy mode, each round will have 3 questions, and Hard mode will have 5 questions.
-5. The player will have the choice to walkaway at the end of each round.
-6. If the player gives incorrect answer for any question, they will be eliminated without any compensation.
-7. Player will have three lifelines: 
+4. The player will have the choice to walkaway at the end of each round.
+5. If the player gives incorrect answer for any question, they will be eliminated without any compensation.
+6. Player will have three lifelines: 
     - Fifty-fifty:
     - Call a friend:
     - Audience poll: 
-8. To win the game, player has to answer all the questions. As mentioned above already player still have the option to walkaway at the end of each round.
-9. Player can enter 0 at any time to exit the game.
+7. To win the game, player has to answer all the questions. As mentioned above already player still have the option to walkaway at the end of each round.
+8. Player can enter 0 at any time to exit the game.
 
 
 Enter 1 to go back to the main menu, any other key to exit the game. 

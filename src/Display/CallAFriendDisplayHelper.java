@@ -8,6 +8,9 @@ import java.util.Scanner;
 
 public class CallAFriendDisplayHelper {
     
+    // This method is used to get user input with a time limit.
+    // It reads characters from the console until the time limit is reached or Enter is pressed.
+    // It returns the input as a formatted string.
     public String getUserInputTimed(long lapseTime, Scanner scanner){
         StringBuilder input = new StringBuilder();
         long startTime = System.currentTimeMillis();

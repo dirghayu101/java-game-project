@@ -8,7 +8,8 @@ public class CallAFriend extends Lifeline {
     String callAFriendAnswer;
     int responseStatus = 2;
     
-    
+    // useLifeline method is overridden to get and display the call a friend response.
+    // It uses the CallAFriendHelper class to get the matching answer status and possible answers.
     /* 
      * responseStatus possible values:
      * 1 - Success, found 1 probable answers. 
@@ -28,6 +29,7 @@ public class CallAFriend extends Lifeline {
         userDisplay.callAFriendResponse(responseStatus, callAFriendAnswer);
    }
 
+    // getLifeline method is overridden to return the name of the lifeline.
    @Override
    public String getLifeline(){
     return "Call a Friend";

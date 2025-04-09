@@ -1,9 +1,12 @@
 package display;
 
+/**
+ * This class contains constants for file paths used in displaying various screens and messages in the game.
+ * The constants are organized into categories for better readability and maintainability.
+ */
 public class DisplayConstants {
     public static final String WELCOME_SCREEN = "static/display/welcomeScreen.txt";
     public static final String GAME_RULES = "static/display/rules.txt";
-    public static final String GET_USER_NAME = "static/display/userChoicePrompt.txt";
     public static final String CHOOSE_LEVEL = "static/display/chooseLevel.txt";
     public static final String ELIMINATE = "static/display/eliminate.txt";
     public static final String WALKAWAY = "static/display/walkaway.txt";

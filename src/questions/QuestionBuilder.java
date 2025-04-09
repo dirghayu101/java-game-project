@@ -45,8 +45,8 @@ public class QuestionBuilder {
         ArrayList<String> questionSetString = this.getRandomQuestionsArray();
         ArrayList<Question> questionSet = new ArrayList<>();
         int key = 1;
-        boolean canUseLifeline = true;
         for(String question: questionSetString){
+            boolean canUseLifeline = true;
             int questionId = key;
             if(this.prizeMap.get(key) == null){
                 System.out.println("error about to occur");

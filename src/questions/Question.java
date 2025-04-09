@@ -20,10 +20,13 @@ public class Question {
         this.prizeAmount = prizeAmount;
     }
 
+    // Gets the question's answer option value.
     public String getAnswer(){
         return this.options[this.correctAnswer - 1];
     }
 
+    // Method to remove two incorrect options from the options array.
+    // This method is used for the lifeline "50-50".
     public void removeTwoIncorrectOptions(){
         GeneralUtilityMethods util = new GeneralUtilityMethods();
         int keepOption = util.getRandomOption(this.correctAnswer);
@@ -33,11 +36,13 @@ public class Question {
         this.options = modifiedOptions;
     }
 
+    // Method to perform an audience poll on the options.
     public double[] audiencePollOnOptions(){
         GeneralUtilityMethods util = new GeneralUtilityMethods();
         return util.audiencePollResult(this.options.length, this.correctAnswer);
     }
 
+    // Method to verify if the option selected by the user is correct.
     public boolean isCorrectAnswer(int option){
         return option == this.correctAnswer;
     }

@@ -14,6 +14,7 @@ public class Display {
     static Lifelines userLifelines = Lifelines.getLifelines();
     private static final Scanner userInputScanner = new Scanner(System.in);
 
+    // Private constructor to make it a singleton class.
     private Display() {
     }
 
@@ -51,7 +52,7 @@ public class Display {
 
     // Shows starting welcome screen text to user when the user starts game.
     public void startGame() {
-        this.putSpaceOnDisplay(12);
+        this.putSpaceOnDisplay(6);
         this.showDisplayScreenFile(DisplayConstants.GAME_START, 300);
     }
 
@@ -64,6 +65,7 @@ public class Display {
         System.exit(0);
     }
 
+    // Method responsible for printing the poll results.
     public void printPollResult(String[] options, double[] pollResult){
         if(options.length != pollResult.length){
             System.out.println("An issue occurred in the system.");
@@ -90,14 +92,17 @@ public class Display {
         System.out.println("\n\nPrize Amount: $" + question.prizeAmount + "\n");
     }
 
+    // Displays available lifeline to the user.
     private void lifelinePrinter(int lifelineStartOption) {
         ArrayList<String> availableLifelines = userLifelines.getAvailableLifelines();
+        this.putSpaceOnDisplay(2);
         for (String lifeline : availableLifelines) {
             System.out.println("Lifeline option " + lifelineStartOption + ": " + lifeline + ".");
             lifelineStartOption++;
         }
     }
 
+    // Method handles lifeline when invoked by the user.
     private void handleLifeline(int chosenOption, Question question) {
         ArrayList<String> availableLifelines = userLifelines.getAvailableLifelines();
         String chosenLifeline = availableLifelines.get(chosenOption - 1);
@@ -122,7 +127,7 @@ public class Display {
             this.printQuestionLifeline(question);
             userChoice = this.getUserChoice(minOption, maxOption);
             confirmUserChoice = userConfirmsChoice(userChoice);
-            if (question.canUseLifeline && userChoice > lifelineStartOption) {
+            if (!confirmUserChoice && question.canUseLifeline && userChoice > lifelineStartOption) {
                 useLifeline = true;
                 handleLifeline(userChoice - lifelineStartOption, question);
             }
@@ -201,9 +206,11 @@ public class Display {
 
     // Prompt to confirm user choice.
     private boolean userConfirmsChoice(int userChoice) {
-        System.out.println("You have chosen the option " + userChoice);
+        System.out.println("You have chosen the option " + userChoice + ".");
+        this.putSpaceOnDisplay(1, "", 600);
         System.out.println("This is the final confirmation, you can still change your choice now.");
-        System.out.println("Enter 1 to confirm your choice, any other character to choose again.");
+        this.putSpaceOnDisplay(1, "", 600);
+        System.out.println("Enter 1 to confirm your choice, any other number except 0 to choose again.");
         int confirm = this.getUserChoice();
         return confirm != 1; // returns false if user enters 1.
     }
@@ -330,6 +337,13 @@ public class Display {
         return username;
     }
 
+    // Start Round message.
+    public void roundStart(int currentRound){
+        this.putSpaceOnDisplay(3, "", 600);
+        System.out.println("Welcome to Round " + currentRound + "!");
+        this.putSpaceOnDisplay(3, "", 600);
+    }
+
     // Round cleared message.
     public void roundCleared(int currentRound){
         System.out.println("CONGRATULATIONS! YOU MADE IT!!!");
@@ -368,10 +382,11 @@ public class Display {
      */
     public void callAFriendResponse(int responseStatus, String respondedAnswer) {
         respondedAnswer = respondedAnswer.strip();
+        this.putSpaceOnDisplay(2, ".", 400);
         switch (responseStatus) {
             case 1 -> {
                 this.showDisplayScreenFile(DisplayConstants.CALL_FRIEND_SUCCESS, 680);
-                System.out.println("I am pretty sure the answer is: " + respondedAnswer + "\n\n");
+                System.out.println("I am pretty sure the answer is: " + respondedAnswer);
             }
             case 2 -> {
                 this.showDisplayScreenFile(DisplayConstants.CALL_FRIEND_PARTIAL, 680);
@@ -379,6 +394,7 @@ public class Display {
             }
             default -> this.showDisplayScreenFile(DisplayConstants.CALL_FRIEND_FAILURE, 680);
         }
+        this.putSpaceOnDisplay(2, ".", 580);
         System.out.println("CALL HANGING OUT!\n\nCall a friend lifeline, has been used.\n\n");
     }
 }
